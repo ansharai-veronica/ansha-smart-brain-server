@@ -30,7 +30,7 @@ app.get('/profile/:id',  profile.handleProfile(knex))
 app.put('/image',  image.handleImage(knex))
 app.post('/imageUrl',  image.handleApiCall)
 
-
-app.listen(3001, () => {
+const PORT = process.env.PORT || 3005
+app.listen(PORT, () => {
     console.log('server is listening on port 3001')
 })
