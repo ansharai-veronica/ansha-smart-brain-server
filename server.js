@@ -6,13 +6,14 @@ const signin = require('./controllers/signin')
 const register = require('./controllers/register')
 const profile = require('./controllers/profile')
 const image = require('./controllers/image')
+
 const knex = require('knex')({
     client: 'pg',
     connection: {
         host: '127.0.0.1',
         user: 'postgres',
         password: 'l1u6p0u794',
-        database: '\'smart-brain\''
+        database: 'smart-brain'
     }
 })
 
@@ -20,7 +21,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-
+app.get('/',(req,res) => res.json('HI there'))
 app.post('/signin',  signin.handleSignin(bcrypt,knex))
 
 app.post('/register',  register.handleRegister(bcrypt,knex,))
@@ -32,5 +33,5 @@ app.post('/imageUrl',  image.handleApiCall)
 
 const PORT = process.env.PORT || 3005
 app.listen(PORT, () => {
-    console.log('server is listening on port 3001')
+    console.log('server is listening on port' + PORT)
 })
