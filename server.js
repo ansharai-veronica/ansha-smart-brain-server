@@ -10,10 +10,8 @@ const image = require('./controllers/image')
 const knex = require('knex')({
     client: 'pg',
     connection: {
-        host: ' postgresql-trapezoidal-90119',
-        user: 'postgres',
-        password: '',
-        database: 'smart-brain'
+        host: process.env.DATABASE_URL,
+        ssl: true
     }
 })
 
@@ -21,15 +19,15 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/',(req,res) => res.json('HI there'))
-app.post('/signin',  signin.handleSignin(bcrypt,knex))
+app.get('/', (req, res) => res.json('HI there'))
+app.post('/signin', signin.handleSignin(bcrypt, knex))
 
-app.post('/register',  register.handleRegister(bcrypt,knex,))
+app.post('/register', register.handleRegister(bcrypt, knex))
 
-app.get('/profile/:id',  profile.handleProfile(knex))
+app.get('/profile/:id', profile.handleProfile(knex))
 
-app.put('/image',  image.handleImage(knex))
-app.post('/imageUrl',  image.handleApiCall)
+app.put('/image', image.handleImage(knex))
+app.post('/imageUrl', image.handleApiCall)
 
 const PORT = process.env.PORT || 3005
 app.listen(PORT, () => {
